@@ -5,43 +5,26 @@ import 'package:flutter_svg/flutter_svg.dart';
 class navBarWidget extends StatelessWidget {
   const navBarWidget({super.key});
 
-  
-
   @override
   Widget build(BuildContext context) {
-
-    List <Widget> pages = [
+    List<Widget> pages = [
       homeView(),
-      
     ];
     return Scaffold(
-
-    body: homeView(),
-
+      body: homeView(),
       bottomNavigationBar:
-      
-      
-      
-       BottomNavigationBar(
-        showSelectedLabels: false,
-        
-        items: 
-      [
-
-        BottomNavigationBarItem(icon:SvgPicture.asset("assets/icons/Home.svg"),label:"home" ),
-
-          BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/Bookmark.svg"),label: "wishlist"),  
-
-        BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/cart.svg"),label: "cart"),  
-
-      BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/Profile.svg"),label: "profile"),  
-
-
-      ]
-      
-      
-      
-      ),
+          BottomNavigationBar(showSelectedLabels: false, items: [
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/icons/Home.svg"), label: "home"),
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/icons/Bookmark.svg"),
+            label: "wishlist"),
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/icons/cart.svg"), label: "cart"),
+        BottomNavigationBarItem(
+            icon: SvgPicture.asset("assets/icons/Profile.svg"),
+            label: "profile"),
+      ]),
     );
   }
 }
