@@ -36,26 +36,37 @@ class _signUpViewState extends State<signUpView> {
         title: Row(
           children: [
             Container(
-              height: 41,
-              width: 41,
-              padding: EdgeInsets.only(left: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: appColors.whiteColor,
-                border: Border.all(color: appColors.accentColor),
-              ),
-              child: Icon(Icons.arrow_back_ios),
-            )
+                height: 41,
+                width: 41,
+                padding: EdgeInsets.only(left: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: appColors.whiteColor,
+                  border: Border.all(color: appColors.accentColor),
+                ),
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.arrow_back_ios)))
           ],
         ),
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-        if(state is SignUpSuccessState){
-          pushReplacement(context, navBarWidget());
-        } else if(state is SignUpErrorState){
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.signUpError)));
-        }
+          if (state is SignUpSuccessState) {
+            Navigator.pop(context);
+            pushReplacement(context, navBarWidget());
+          } else if (state is SignUpErrorState) {
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.signUpError)));
+          } else if (state is SignUpLoadingState) {
+            showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) => CircularProgressIndicator());
+          }
         },
         builder: (context, state) {
           return Padding(
@@ -129,17 +140,18 @@ class _signUpViewState extends State<signUpView> {
                       ],
                     ),
                     Gap(25),
-                    (state is SignUpLoadingState)? 
-                    CircularProgressIndicator():
+
                     customButtonWidget(
                         text: "Sign Up",
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            context.read<AuthBloc>().add(SignUpEvent(SignUpModelParams(
-                              name: userNameContoller.text,
-                               email: emailController.text,
-                                password:passwordController.text,
-                                 passwordConfirmation: confirmationController.text)));
+                            context.read<AuthBloc>().add(SignUpEvent(
+                                SignUpModelParams(
+                                    name: userNameContoller.text,
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                    passwordConfirmation:
+                                        confirmationController.text)));
                           }
                         },
                         color: appColors.primaryColor),

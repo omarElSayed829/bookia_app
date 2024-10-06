@@ -1,9 +1,10 @@
-import 'package:bookia_app/core/Utils/app_color.dart';
-import 'package:bookia_app/core/Utils/text_style.dart';
-import 'package:bookia_app/core/Utils/widgets/custom_button.dart';
+import 'package:bookia_app/feature/Home/presentation/bloc/home_bloc.dart';
+import 'package:bookia_app/feature/Home/presentation/bloc/home_events.dart';
 import 'package:bookia_app/feature/Home/presentation/widgets/banner_widget.dart';
+import 'package:bookia_app/feature/Home/presentation/widgets/best_seller_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
@@ -39,73 +40,7 @@ class _homeViewState extends State<homeView> {
           children: [
             const Gap(5),
             const bannerHomeWidget(),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                children: [
-                  Text(
-                    "Popular Books",
-                    style: getBodyTextStyle(color: appColors.black),
-                  ),
-                  const Gap(10),
-                  GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisExtent: 300,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 10),
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 235, 226, 226),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      "assets/images/book.png",
-                                      fit: BoxFit.cover,
-                                      width: 200,
-                                    ),
-                                  ),
-                                ),
-                                const Gap(3),
-                                Text(
-                                  "the book",
-                                  style:
-                                      getBodyTextStyle(color: appColors.black),
-                                ),
-                                const Gap(5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "₹285",
-                                      style: getBodyTextStyle(
-                                          color: appColors.black),
-                                    ),
-                                    const Spacer(),
-                                    customButtonWidget(
-                                      text: "Buy",
-                                      onPressed: () {},
-                                      color: appColors.black,
-                                      width: 80,
-                                      height: 28,
-                                    )
-                                  ],
-                                )
-                              ],
-                            ));
-                      }),
-                ],
-              ),
-            )
+            BestSellerWidget()
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:bookia_app/core/Utils/functions/navigation.dart';
 import 'package:bookia_app/core/Utils/text_style.dart';
 import 'package:bookia_app/core/Utils/widgets/custom_button.dart';
 import 'package:bookia_app/feature/auth/presentation/pages/login_view.dart';
+import 'package:bookia_app/feature/auth/presentation/pages/signUp_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -52,7 +53,9 @@ class welcomeView extends StatelessWidget {
                       isBorder: true,
                       textStyle: getBodyTextStyle(color: appColors.black),
                       text: "Register",
-                      onPressed: () {},
+                      onPressed: () {
+                        push(context, signUpView());
+                      },
                       color: appColors.whiteColor),
                   Spacer(
                     flex: 1,

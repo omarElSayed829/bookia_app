@@ -1,10 +1,16 @@
 import 'package:bookia_app/core/Utils/app_color.dart';
+import 'package:bookia_app/core/services/Dio/dio_providor.dart';
+import 'package:bookia_app/core/services/local_storage/local_storage.dart';
+import 'package:bookia_app/feature/Home/presentation/bloc/home_bloc.dart';
 import 'package:bookia_app/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:bookia_app/feature/intro/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DioProvidor.init();
+  await AppLocalStorage.init();
   runApp(const MainApp());
 }
 
@@ -13,8 +19,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc(),
+        ),
+        BlocProvider(
+          create: (context) => HomeBloc(),
+        ),
+      ],
       child: MaterialApp(
           theme: ThemeData(
             fontFamily: "DMSerifDisplay",

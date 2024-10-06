@@ -1,51 +1,38 @@
-import 'dart:convert';
-import 'dart:math';
-
-import 'package:bookia_app/core/constants/auth_constants.dart';
+import 'package:bookia_app/core/services/Dio/dio_providor.dart';
 import 'package:bookia_app/feature/auth/presentation/data/model/request/login_model.dart';
 import 'package:bookia_app/feature/auth/presentation/data/model/request/signUp_model.dart';
-import 'package:bookia_app/feature/auth/presentation/data/model/response/login_response/login_response.dart';
+import 'package:bookia_app/feature/auth/presentation/data/model/response/auth_model_response/auth_model_response.dart';
+
 import 'package:bookia_app/feature/auth/presentation/data/repo/auth_endpoints.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepo {
-  static Future<bool> login(LoginModelParams params) async {
+  static Future<AuthModelResponse?> login(LoginModelParams params) async {
     try {
-      var url = Uri.parse(AppConstants.baseUrl + AppEndPoints.login);
-      var response = await http.post(url, body: params.toJson());
+      var response = await DioProvidor.post(
+          endPoint: AppEndPoints.login, data: params.toJson());
 
       if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body);
-        var model = LoginResponse.fromJson(jsonResponse);
-        var pref = await SharedPreferences.getInstance();
-        pref.setString("token", model.data?.token??"");
-        return true;
+        var model = AuthModelResponse.fromJson(response.data);
+        return model;
       } else {
-        return false;
+        return null;
       }
     } on Exception catch (e) {
-      return false;
+      return null;
     }
   }
 }
 
-
 class SignUpRepo {
- 
-static Future<bool> getSignUp (SignUpModelParams params) async{
+  static Future<AuthModelResponse?> getSignUp(SignUpModelParams params) async {
+    var response = await DioProvidor.post(
+        endPoint: AppEndPoints.signUp, data: params.toJson());
 
-var url = Uri.parse(AppConstants.baseUrl+AppEndPoints.signUp);
-var response = await http.post(url,body:params.toJson() );
-
-if (response.statusCode ==201){
-  return true;
-
-} else  {
-  return false;
-}
-
-}
-
-
+    if (response.statusCode == 201) {
+      var model = AuthModelResponse.fromJson(response.data);
+      return model;
+    } else {
+      return null;
+    }
+  }
 }

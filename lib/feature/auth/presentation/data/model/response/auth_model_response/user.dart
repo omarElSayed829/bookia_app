@@ -30,5 +30,14 @@ class User {
         image: json['image'] as String?,
       );
 
-  
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'email': email,
+        'address': address,
+        'city': city,
+        'phone': phone,
+        'email_verified': emailVerified,
+        'image': image,
+      };
 }

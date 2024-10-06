@@ -1,4 +1,6 @@
 import 'package:bookia_app/core/Utils/functions/navigation.dart';
+import 'package:bookia_app/core/Utils/widgets/navBarWidget.dart';
+import 'package:bookia_app/core/services/local_storage/local_storage.dart';
 import 'package:bookia_app/feature/intro/welcome_view.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,12 @@ class _splashViewState extends State<splashView> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
-      pushReplacement(context, welcomeView());
+      String token = AppLocalStorage.getData(key: AppLocalStorage.token) ?? "";
+      if (token.isEmpty) {
+        pushReplacement(context, welcomeView());
+      } else {
+        pushReplacement(context, navBarWidget());
+      }
     });
   }
 

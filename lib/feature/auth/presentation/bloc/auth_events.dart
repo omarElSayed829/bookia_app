@@ -9,12 +9,8 @@ class LoginEvent extends AuthEvent {
   LoginEvent(this.params);
 }
 
+class SignUpEvent extends AuthEvent {
+  final SignUpModelParams params;
 
-class SignUpEvent extends AuthEvent{
-
-final SignUpModelParams params;
-
-SignUpEvent(this.params);
-
-
+  SignUpEvent(this.params);
 }
